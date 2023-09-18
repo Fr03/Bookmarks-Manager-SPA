@@ -51,6 +51,7 @@ async function renderBookmarks() {
         bookmarks.forEach(bookmark => {
             $("#content").append(renderBookmark(bookmark));
         });
+        renderCategorylist()// a voir ici
         restoreContentScrollPosition();
         // Attached click events on command icons
         $(".editCmd").on("click", function () {
@@ -215,13 +216,11 @@ function renderBookmarkForm(bookmark = null) {
     });
 }
 
-function renderCategorylist() {
-    let categoryList = new Set([])
-    forEach
+async function renderCategorylist() {// à voir
+    let categoryList = new Set([]);
+    let bookmark = await Bookmarks_API.Get(id);
     $("#content").append(`
-    <div> 
-        <i> </i>
-    </div
+    <div> <i> class="bookmarkCategorie">${bookmark.Category} </i> </div>
     `);
 }
 

@@ -28,11 +28,10 @@ function renderAbout() {
                 <h2>Gestionnaire de favoris</h2>
                 <hr>
                 <p>
-                    Petite application de gestion de contacts à titre de démonstration
-                    d'interface utilisateur monopage réactive.
+                    Petite application de favoris pour Laboratoire 1
                 </p>
                 <p>
-                    Auteur: Nicolas Chourot
+                    Auteur: Nicolas Chourot et Francis Picard
                 </p>
                 <p>
                     Collège Lionel-Groulx, automne 2023
@@ -51,7 +50,7 @@ async function renderBookmarks() {
         bookmarks.forEach(bookmark => {
             $("#content").append(renderBookmark(bookmark));
         });
-        renderCategorylist()// a voir ici
+        renderCategorylist(bookmarks)// a voir ici
         restoreContentScrollPosition();
         // Attached click events on command icons
         $(".editCmd").on("click", function () {
@@ -216,12 +215,16 @@ function renderBookmarkForm(bookmark = null) {
     });
 }
 
-async function renderCategorylist() {// à voir
-    let categoryList = new Set([]);
-    let bookmark = await Bookmarks_API.Get(id);
-    $("#content").append(`
-    <div> <i> class="bookmarkCategorie">${bookmark.Category} </i> </div>
-    `);
+function renderCategorylist(bookmarks) {// à voir
+    let categoryList = new Set([]); // set trie les doublons
+    bookmarks.forEach(bookmark => {
+        categoryList.add(bookmark.Category);
+    })
+
+    categoryList.forEach( (category) => {
+    $(".dropdown-divider").append(`
+    <div> <i class="bookmarkCategory">${category} </i> </div>
+    `); })
 }
 
 function getFormData($form) {
